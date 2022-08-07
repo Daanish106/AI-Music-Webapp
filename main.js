@@ -7,7 +7,9 @@ leftWristY = 0;
 rightWristY = 0;
 
 leftWrist = 0;
-song_stat = "";
+rightWrist = 0;
+leftsong_stat = "";
+rightsong_stat = "";
 
 function preload() 
 {  
@@ -48,13 +50,14 @@ function gotPoses(results)
         console.log("rightWristX = " + rightWristX + "rightWristY = " + rightWristY);
 
         leftWrist = results[0].pose.keypoints[9].score;
+        rightWrist = results[0].pose.keypoints[10].score;
     }
 }   
 function draw()
 {
     image(video, 0, 0, 600, 500);
 
-    song_stat = song1.isPlaying();
+    leftsong_stat = song1.isPlaying();
 
     if(leftWrist > 0.2)
     {
@@ -64,23 +67,26 @@ function draw()
 
         song2.stop();
 
-        if(song_stat == false)
+        if(leftsong_stat == false)
         {
             song1.play();
            
         }
     }
 
+    rightsong_stat = song2.isPlaying();
 
-    
+    if(rightWrist > 0.2)
+    {
+        fill("#FF0000");
+        stroke("#FF0000");
+        circle(rightWristX, rightWristY, 30);
 
- 
+        song1.stop();
 
-    
-    fill("#FF0000");
-    stroke("#FF0000");
-    circle(rightWristX, rightWristY, 30);
-
-    
-
+        if(rightsong_stat == false)
+        {
+            song2.play();
+        }
+    }
 }
